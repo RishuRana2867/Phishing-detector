@@ -1,21 +1,21 @@
 # 🔍 Phishing Detector
 
-A lightweight **Python-based phishing domain detection tool** that identifies suspicious domains using **domain extraction, typo similarity detection, and suspicious TLD analysis**.
+A lightweight **Python-based phishing domain detection tool** that analyzes URLs and detects suspicious or malicious domains using multiple detection techniques such as typo detection, suspicious TLD analysis, and phishing keyword detection.
 
-This tool helps detect phishing websites by comparing domains against a **trusted domain database** and analyzing domain similarity.
+The tool is designed for **educational purposes and cybersecurity learning**, helping users understand how phishing domains are identified.
 
 ---
 
 # 🚀 Features
 
-* Detects **phishing domains**
-* **Typo-squatting detection** using Levenshtein similarity
-* **Automatic root domain extraction**
-* Detection of **suspicious TLDs** often used in phishing
-* Uses a **custom domain database (`domains.txt`)**
-* **Command-line interface**
-* **Linux terminal banner output**
-* Lightweight and fast
+* Detects **typo-squatting phishing domains**
+* Detects **suspicious Top Level Domains (TLDs)**
+* Detects **phishing keywords in URLs**
+* Detects **IDN homograph attacks**
+* Extracts **root domain automatically**
+* Uses a **custom legitimate domain database**
+* Clean **command-line interface**
+* **Linux-style terminal banner**
 
 ---
 
@@ -37,7 +37,8 @@ Phishing-detector/
 ├── domains.txt
 ├── requirements.txt
 ├── README.md
-└── .gitignore
+├── .gitignore
+└── LICENSE
 ```
 
 ---
@@ -49,7 +50,7 @@ Follow these steps to install and run the tool on **Kali Linux, Ubuntu, Debian, 
 ## 1️⃣ Clone the repository
 
 ```
-git clone https://github.com/RishuRana2867/Phishing-detector.git
+git clone https://github.com/USERNAME/Phishing-detector.git
 ```
 
 ---
@@ -62,7 +63,7 @@ cd Phishing-detector
 
 ---
 
-## 3️⃣ Install required dependencies
+## 3️⃣ Install dependencies
 
 ```
 pip3 install -r requirements.txt --break-system-packages
@@ -72,10 +73,10 @@ pip3 install -r requirements.txt --break-system-packages
 
 # ▶️ Running the Tool
 
-Run the tool using:
+Run the script with a domain or URL:
 
 ```
-python3 phishscan.py <domain>
+python3 phishscan.py <url>
 ```
 
 Example:
@@ -118,27 +119,9 @@ SUSPICIOUS ⚠ Suspicious TLD detected
 
 ---
 
-# 📦 Requirements
-
-The project uses the following Python libraries:
-
-```
-tldextract
-python-Levenshtein
-colorama
-```
-
-Install them with:
-
-```
-pip3 install -r requirements.txt
-```
-
----
-
 # 🌐 Domain Database
 
-The tool uses a **domain database (`domains.txt`)** containing legitimate domains.
+The tool uses a **domain database (`domains.txt`)** containing legitimate domains used for comparison.
 
 Example:
 
@@ -150,26 +133,46 @@ github.com
 wikipedia.org
 ```
 
-You can add more trusted domains to **improve phishing detection accuracy**.
+Users can add more trusted domains to improve phishing detection accuracy.
+
+---
+
+# 📦 Requirements
+
+The following Python libraries are required:
+
+```
+tldextract
+python-Levenshtein
+colorama
+```
+
+Install them using:
+
+```
+pip3 install -r requirements.txt
+```
+
+---
+
+# 🔮 Future Improvements
+
+Planned improvements for the project include:
+
+* Domain age detection using WHOIS
+* DNS reputation checks
+* Threat intelligence integration
+* Machine learning phishing detection
 
 ---
 
 # ⚠️ Disclaimer
 
-This project is intended **for educational purposes and cybersecurity research only**.
+This tool is intended **for educational and cybersecurity research purposes only**.
 
 Do **not use this tool for illegal activities**.
-The developer is **not responsible for misuse** of this software.
+The author is **not responsible for misuse** of this software.
 
 ---
 
-# 👨‍💻 Author
-
-**Rishu Rana**
-
-LinkedIn
-https://www.linkedin.com/in/rishu-rana-32429a376/
-
----
-
-⚡ *Learning cybersecurity by building real tools.*
+⚡ *Learning cybersecurity by building practical tools.*
