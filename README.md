@@ -1,18 +1,20 @@
-# Phishing URL Detector 🔐
+# 🔍 Phishing Detector
 
-A Python-based phishing URL detector that identifies suspicious and malicious links using domain extraction and similarity analysis.
+A lightweight **Python-based phishing domain detection tool** that identifies suspicious domains using **domain extraction, typo similarity detection, and suspicious TLD analysis**.
 
-This tool analyzes domain names, detects possible typo-squatting attacks, and checks if a URL resembles well-known legitimate websites.
+This tool helps detect phishing websites by comparing domains against a **trusted domain database** and analyzing domain similarity.
 
 ---
 
 # 🚀 Features
 
-* Detects phishing URLs
-* Automatic subdomain detection
-* Root domain extraction
-* Typo-domain detection using Levenshtein similarity
-* User input URL scanning
+* Detects **phishing domains**
+* **Typo-squatting detection** using Levenshtein similarity
+* **Automatic root domain extraction**
+* Detection of **suspicious TLDs** often used in phishing
+* Uses a **custom domain database (`domains.txt`)**
+* **Command-line interface**
+* **Linux terminal banner output**
 * Lightweight and fast
 
 ---
@@ -22,107 +24,152 @@ This tool analyzes domain names, detects possible typo-squatting attacks, and ch
 * Python
 * tldextract
 * python-Levenshtein
+* colorama
 
 ---
+
+# 📂 Project Structure
+
+```
+Phishing-detector/
+│
+├── phishscan.py
+├── domains.txt
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
 
 ---
 
 # ⚙️ Installation (Linux)
 
-Follow these steps to install and run the tool on Linux (Kali Linux, Ubuntu, Debian, etc.).
+Follow these steps to install and run the tool on **Kali Linux, Ubuntu, Debian, or other Linux distributions**.
 
 ## 1️⃣ Clone the repository
 
-```bash
-git clone https://github.com/yourusername/phishing-detector.git
 ```
+git clone https://github.com/RishuRana2867/Phishing-detector.git
+```
+
+---
 
 ## 2️⃣ Move into the project directory
 
-```bash
-cd phishing-detector
+```
+cd Phishing-detector
 ```
 
-## 3️⃣ Install Python and pip (if not already installed)
+---
 
-```bash
-sudo apt update
-sudo apt install python3 python3-pip -y
+## 3️⃣ Install required dependencies
+
 ```
-
-## 4️⃣ Install required Python libraries
-
-Using the requirements file:
-
-```bash
-pip3 install -r requirements.txt
-```
-
-If your Linux shows **externally managed environment error**, run:
-
-```bash
 pip3 install -r requirements.txt --break-system-packages
-```
-
-Or install libraries manually:
-
-```bash
-pip3 install tldextract
-pip3 install python-Levenshtein
 ```
 
 ---
 
 # ▶️ Running the Tool
 
-Run the Python script:
+Run the tool using:
 
-```bash
-python3 phishscan.py
+```
+python3 phishscan.py <domain>
+```
+
+Example:
+
+```
+python3 phishscan.py google.com
 ```
 
 ---
 
 # 💻 Example Usage
 
+### Legitimate domain
+
 ```
-Enter URL (or type exit): google.com
-Result: SAFE ✅ Legitimate Website
+$ python3 phishscan.py google.com
 
-Enter URL (or type exit): goggle.com
-Result: PHISHING 🚨 Looks like google.com
+SAFE ✅ Legitimate Website
+```
 
-Enter URL (or type exit): amazon-secure-login.xyz
-Result: SUSPICIOUS ⚠️ Unknown Domain
+---
+
+### Typo-phishing domain
+
+```
+$ python3 phishscan.py goggle.com
+
+PHISHING 🚨 Looks like google.com
+```
+
+---
+
+### Suspicious TLD
+
+```
+$ python3 phishscan.py paypal-login.xyz
+
+SUSPICIOUS ⚠ Suspicious TLD detected
 ```
 
 ---
 
 # 📦 Requirements
 
-requirements.txt
+The project uses the following Python libraries:
 
 ```
 tldextract
 python-Levenshtein
+colorama
 ```
 
+Install them with:
 
+```
+pip3 install -r requirements.txt
+```
 
-# 🔍 How It Works
+---
 
-1. The tool extracts the **root domain** from the given URL.
-2. It checks if the domain matches a **known legitimate domain**.
-3. If not, it calculates **similarity using Levenshtein distance**.
-4. If similarity is high, the domain may be a **typo-phishing domain**.
-5. Otherwise, the domain is marked as **suspicious**.
+# 🌐 Domain Database
 
+The tool uses a **domain database (`domains.txt`)** containing legitimate domains.
 
+Example:
+
+```
+google.com
+facebook.com
+amazon.com
+github.com
+wikipedia.org
+```
+
+You can add more trusted domains to **improve phishing detection accuracy**.
+
+---
 
 # ⚠️ Disclaimer
 
-This tool is created for **educational and cybersecurity research purposes only**.
+This project is intended **for educational purposes and cybersecurity research only**.
 
-Do **not** use this tool for illegal activities.
-
+Do **not use this tool for illegal activities**.
 The developer is **not responsible for misuse** of this software.
+
+---
+
+# 👨‍💻 Author
+
+**Rishu Rana**
+
+LinkedIn
+https://www.linkedin.com/in/rishu-rana-32429a376/
+
+---
+
+⚡ *Learning cybersecurity by building real tools.*
