@@ -50,7 +50,7 @@ Follow these steps to install and run the tool on **Kali Linux, Ubuntu, Debian, 
 ## 1️⃣ Clone the repository
 
 ```
-git clone https://github.com/USERNAME/Phishing-detector.git
+git clone https://github.com/RishuRana2867/Phishing-detector.git
 ```
 
 ---
