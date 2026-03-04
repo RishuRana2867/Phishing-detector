@@ -1,86 +1,118 @@
+#!/usr/bin/env python3
+
 import tldextract
 import Levenshtein as lv
+import argparse
+from colorama import Fore, Style, init
 
-# Only add ROOT DOMAINS here
-legitimate_domains = [
-    "google.com",
-    "facebook.com",
-    "amazon.com",
-    "amazon.in",
-    "microsoft.com",
-    "paypal.com",
-    "apple.com",
-    "netflix.com",
-    "github.com",
-    "wikipedia.org",
-    "sbi.co.in",
-    "hdfcbank.com",
-    "icicibank.com",
-    "axisbank.com",
-    "idfcfirst.bank.in",
-    "paytm.com",
-    "phonepe.com",
-    "flipkart.com"
-]
+init(autoreset=True)
+
+# Suspicious TLDs
+suspicious_tlds = ["xyz", "tk", "ml", "ga", "cf"]
+
+# ===============================
+# Banner
+# ===============================
+def banner():
+    print(Fore.CYAN + """
+██████╗ ██╗  ██╗██╗███████╗██╗  ██╗
+██╔══██╗██║  ██║██║██╔════╝██║  ██║
+██████╔╝███████║██║███████╗███████║
+██╔═══╝ ██╔══██║██║╚════██║██╔══██║
+██║     ██║  ██║██║███████║██║  ██║
+╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝
+
+        Phishing Detector 🔍
+""")
+
+# ===============================
+# Load legitimate domains
+# ===============================
+def load_domains():
+
+    try:
+        with open("domains.txt") as f:
+            return [line.strip() for line in f if line.strip()]
+    except:
+        print(Fore.RED + "domains.txt not found!")
+        exit()
+
+legitimate_domains = load_domains()
 
 
-# Extract root domain automatically
+# ===============================
+# Extract root domain
+# ===============================
 def extract_root_domain(url):
 
-    if not url.startswith("http"):
+    if not url.startswith(("http://", "https://")):
         url = "http://" + url
 
     extracted = tldextract.extract(url)
 
-    root_domain = extracted.domain + "." + extracted.suffix
-
-    return root_domain
+    return extracted.domain + "." + extracted.suffix
 
 
+# ===============================
 # Typo detection
-def is_typo_domain(domain, threshold=0.8):
+# ===============================
+def is_typo_domain(domain, threshold=0.85):
 
     for legit in legitimate_domains:
 
         similarity = lv.ratio(domain, legit)
 
-        if similarity >= threshold:
+        if similarity >= threshold and domain != legit:
             return legit
 
     return None
 
 
-# Main detector
+# ===============================
+# Main detection
+# ===============================
 def check_url(url):
 
     root_domain = extract_root_domain(url)
 
-    # Safe domain check (subdomains automatically allowed)
+    # Safe domain
     if root_domain in legitimate_domains:
+        print(Fore.GREEN + "SAFE ✅ Legitimate Website")
+        return
 
-        return "SAFE ✅ Legitimate Website"
+    # Suspicious TLD
+    tld = root_domain.split(".")[-1]
+
+    if tld in suspicious_tlds:
+        print(Fore.YELLOW + "SUSPICIOUS ⚠ Suspicious TLD detected")
+
+    # Typo phishing
+    typo = is_typo_domain(root_domain)
+
+    if typo:
+        print(Fore.RED + f"PHISHING 🚨 Looks like {typo}")
+        return
+
+    print(Fore.YELLOW + "UNKNOWN ⚠ Domain not in database")
 
 
-    # Typo phishing detection
-    typo_match = is_typo_domain(root_domain)
+# ===============================
+# CLI arguments
+# ===============================
+def main():
 
-    if typo_match:
+    banner()
 
-        return f"PHISHING 🚨 Looks like {typo_match}"
+    parser = argparse.ArgumentParser(
+        description="Phishing Detector - Detect phishing domains"
+    )
+
+    parser.add_argument("url", help="Domain or URL to scan")
+
+    args = parser.parse_args()
+
+    check_url(args.url)
 
 
-    return "SUSPICIOUS ⚠️ Unknown Domain"
-
-
-
-# User input loop
-while True:
-
-    url = input("\nEnter URL (or type exit): ")
-
-    if url.lower() == "exit":
-        break
-
-    result = check_url(url)
-
-    print("Result:", result)
+if __name__ == "__main__":
+    main()
